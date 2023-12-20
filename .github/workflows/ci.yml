@@ -98,7 +98,14 @@ jobs:
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
+          accessToken: ${{ secrets.DINGTALK_WEBHOOK}}
+          type: markdown
+          title: '构建成功'
+          content: |
+            # Tips
+            ## Hello
+            > from github action message
+            > ^_^
 
       - name: Print Output
         id: output
