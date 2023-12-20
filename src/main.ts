@@ -34,6 +34,8 @@ export async function run(): Promise<string> {
       }
     }
 
+    core.info(payload.toString());
+
     const res = await axios.post(url, {
       headers: {
         'Content-Type': 'application/json'
