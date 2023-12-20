@@ -1,30 +1,55 @@
 import * as core from '@actions/core'
-import * as github from '@actions/github'
-import { wait } from './wait'
+import axios from 'axios'
+
+import type { Payload } from './types'
 
 /**
  * The main function for the action.
  */
-export async function run(): Promise<void> {
+export async function run(): Promise<string> {
   try {
-    // Get the action input(s)
-    const ms: number = parseInt(core.getInput('milliseconds'), 10)
+    const accessToken = core.getInput('accessToken')
+    const type = core.getInput('type')
+    const title = core.getInput('title')
+    const content = core.getInput('content')
 
-    // Output the payload for debugging
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(
-      `The event payload: ${JSON.stringify(github.context.payload, null, 2)}`
-    )
+    let url = `https://oapi.dingtalk.com/robot/send?access_token=${accessToken}`
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.info(new Date().toTimeString())
-    await wait(ms)
-    core.info(new Date().toTimeString())
+    let payload: Payload = {
+      msgtype: 'text',
+      text: {
+        content: content
+      },
+      at: {}
+    }
 
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    if (type === 'markdown') {
+      payload = {
+        msgtype: 'markdown',
+        markdown: {
+          title: title,
+          text: content
+        },
+        at: {}
+      }
+    }
+
+    const res = await axios.post(url, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    let result = 'OK'
+    if (res.data.errcode > 0) {
+      result = res.data.errmsg
+    }
+
+    return result
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
+
+    return 'error'
   }
 }
