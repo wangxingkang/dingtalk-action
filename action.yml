@@ -1,21 +1,27 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Dingtalk Robot Message'
+description: 'dingtalk robot message for github action'
+author: 'wang_xingakng@qq.com'
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  accessToken:
+    description: 'access token'
     required: true
-    default: '1000'
-
-# Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
+  type:
+    description: 'message type'
+    default: 'text'
+  description: 'title'
+    description: 'message title'
+  content:
+    description: 'message content'
+    required: true
 
 runs:
-  using: docker
-  image: Dockerfile
-  env:
-    INPUT_MILLISECONDS: ${{ inputs.milliseconds }}
+  using: "node16"
+  main: "dist/index.js"
+outputs:
+  result:
+    description: "DingTalk Message Result"
+branding:
+  icon: "award"
+  color: "green"
