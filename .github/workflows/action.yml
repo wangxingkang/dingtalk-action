@@ -1,0 +1,37 @@
+name: Test Action
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test-action:
+    name: GitHub Actions Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Test Local Action
+        id: test-action
+        uses: ./
+        with:
+          accessToken: ${{ secrets.DINGTALK_WEBHOOK}}
+          type: markdown
+          title: '构建成功'
+          content: |
+            # Tips
+            ## Hello
+            > from github action message
+            > ^_^
+
+      - name: Print Output
+        id: output
+        run: echo "${{ steps.test-action.outputs.time }}"
