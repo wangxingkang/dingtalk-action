@@ -36,11 +36,10 @@ export async function run(): Promise<string> {
 
     core.info(payload.toString());
 
-    const res = await axios.post(url, {
+    const res = await axios.post(url, JSON.stringify(payload), {
       headers: {
         'Content-Type': 'application/json'
       },
-      data: JSON.stringify(payload),
     })
 
     let result = 'OK'
