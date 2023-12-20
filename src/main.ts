@@ -39,7 +39,7 @@ export async function run(): Promise<string> {
       data: JSON.stringify(payload),
       headers: {
         'Content-Type': 'application/json'
-      },
+      }
     })
 
     let result = 'OK'
