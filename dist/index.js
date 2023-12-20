@@ -28226,6 +28226,7 @@ async function run() {
         }
         const res = await (0, axios_1.default)({
             url,
+            method: 'post',
             data: JSON.stringify(payload),
             headers: {
                 'Content-Type': 'application/json'
