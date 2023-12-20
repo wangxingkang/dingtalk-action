@@ -37,7 +37,8 @@ export async function run(): Promise<string> {
     const res = await axios.post(url, {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      data: payload,
     })
 
     let result = 'OK'
