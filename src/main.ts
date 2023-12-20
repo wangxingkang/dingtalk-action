@@ -34,21 +34,13 @@ export async function run(): Promise<string> {
       }
     }
 
-    core.info(payload.toString());
-
-    // const res = await axios.post(url, JSON.stringify(payload), {
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    // })
-
-    const res = await (await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(payload),
+    const res = await axios({
+      url,
+      data: JSON.stringify(payload),
       headers: {
         'Content-Type': 'application/json'
-      }
-    })).json()
+      },
+    })
 
     let result = 'OK'
     if (res.data.errcode > 0) {
