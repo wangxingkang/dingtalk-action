@@ -1,6 +1,6 @@
 name: 'Dingtalk Robot Message'
 description: 'dingtalk robot message for github action'
-author: 'wang_xingakng@qq.com'
+author: 'wang_xingkang@qq.com'
 
 # Define your inputs here.
 inputs:
@@ -10,7 +10,7 @@ inputs:
   type:
     description: 'message type'
     default: 'text'
-  description: 'title'
+  title:
     description: 'message title'
   content:
     description: 'message content'
